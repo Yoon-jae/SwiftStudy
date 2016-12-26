@@ -1,0 +1,16 @@
+// index 를 가져 오는 거를 Objective-C의 NSArray를 통해서
+var bookList = [Book]()
+let index = (bookList as NSArray).index(of: book)
+
+IB : Interface builder
+
+@IBAction
+@IBOutlet
+
+// 반드시 맨 뒤에 '!'를 붙여준다 !! (어짜피 자동으로 되긴함)
+@IBOutlet var resultTextView:UITextView!
+
+
+UITextView : Scrollable, multiline text region.
+UITextField
+UILabel
