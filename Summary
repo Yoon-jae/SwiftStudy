@@ -29,3 +29,64 @@ Foundation
 (The Foundation Framework, google)
 
 UIKit
+
+
+
+
+UIImageView:
+A UIImageView object displays a single image or a sequence of animated images in your interface.
+보통 PNG를 쓰는게 좋다.
+
+@IBOutlet var imgView:UIImageView!
+
+animationImages:
+An array of UIImage objects to use for an animation.
+
+init?(named: String)
+Returns the image object associated with the specified filename.
+
+let cuteImages = [UIImage(named:"1.jpg")!]
+
+animationDuration:
+The amount of time it takes to go through one cycle of the images.
+var animationDuration: TimeInterval { get set }
+
+startAnimating():
+Starts animating the images in the receiver.
+
+
+UIButton:
+Sets the title to use for the specified state.
+setTitle(_:for:)
+
+UISlider
+A visual control used to select a single value from a continuous range of values.
+
+yourUILabel.text = String.localizedStringWithFormat("%.2f %@", value, unit)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
