@@ -65,11 +65,55 @@ A visual control used to select a single value from a continuous range of values
 yourUILabel.text = String.localizedStringWithFormat("%.2f %@", value, unit)
 
 
+Protocol : Java의 interface와 같은 것
+그러나 required를 붙이지 않으면 optional한 것이다.
+-> Delegate를 쓰기 위한 것
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@ Delegate 사용 순서 3개 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+delegate protocol 추가. func 사용. 연결하기!!
+
+UITextFieldDelegate
+
+becomeFirstResponder():
+Showing and Hiding the Keyboard
+
+textFieldShouldReturn(_:)
+-> keyboard return on click
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // 인자로 넘어온 부분을 키보드가 내려가게 함
+        return true
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //nameTextField.delegate = self 		// 이것을 반드시 해줘야 한다 !! 아니면 IB에 가서 delegate을 그 View 에 연결
+    }
+
+    // 바탕 화면이 눌렸을 때 키보드가 올라가게 함.
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    	// self는 view 자기 자신, view 객체의 함수
+        self.view.endEditing(true)
+    }
+
+UIResponder
+Responding to Touch Events
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesBegan")
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesMoved")
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesEnded")
+    }
 
 
-
-
-
+TextField 에서 키보드 설정해주는 것이 중요!!
+Keyboard, clearbutton(textFieldShouldClear), return key, placeholder
 
 
 
