@@ -14,3 +14,18 @@ IB : Interface builder
 UITextView : Scrollable, multiline text region.
 UITextField
 UILabel
+
+App Programming Guide for iOS
+
+기본적인 패턴 3개
+1. MVC Pattern
+Model View Controller
+
+2. Target Action Pattern
+3. Delegate Pattern
+
+Concepts in Objective-C Programming
+Foundation
+(The Foundation Framework, google)
+
+UIKit
