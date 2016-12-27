@@ -1,0 +1,307 @@
+// index 를 가져 오는 거를 Objective-C의 NSArray를 통해서
+var bookList = [Book]()
+let index = (bookList as NSArray).index(of: book)
+
+IB : Interface builder
+
+@IBAction
+@IBOutlet
+
+// 반드시 맨 뒤에 '!'를 붙여준다 !! (어짜피 자동으로 되긴함)
+@IBOutlet var resultTextView:UITextView!
+
+
+UITextView : Scrollable, multiline text region.
+UITextField
+UILabel
+
+App Programming Guide for iOS
+
+기본적인 패턴 3개
+1. MVC Pattern
+Model View Controller
+
+2. Target Action Pattern
+3. Delegate Pattern
+
+Concepts in Objective-C Programming
+Foundation
+(The Foundation Framework, google)
+
+UIKit
+
+
+
+
+UIImageView:
+A UIImageView object displays a single image or a sequence of animated images in your interface.
+보통 PNG를 쓰는게 좋다.
+
+@IBOutlet var imgView:UIImageView!
+
+animationImages:
+An array of UIImage objects to use for an animation.
+
+init?(named: String)
+Returns the image object associated with the specified filename.
+
+let cuteImages = [UIImage(named:"1.jpg")!]
+
+animationDuration:
+The amount of time it takes to go through one cycle of the images.
+var animationDuration: TimeInterval { get set }
+
+startAnimating():
+Starts animating the images in the receiver.
+
+
+UIButton:
+Sets the title to use for the specified state.
+setTitle(_:for:)
+
+UISlider
+A visual control used to select a single value from a continuous range of values.
+
+yourUILabel.text = String.localizedStringWithFormat("%.2f %@", value, unit)
+
+
+Protocol : Java의 interface와 같은 것
+그러나 required를 붙이지 않으면 optional한 것이다.
+-> Delegate를 쓰기 위한 것
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@ Delegate 사용 순서 3개 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+delegate protocol 추가. func 사용. 연결하기!!
+
+UITextFieldDelegate
+
+becomeFirstResponder():
+Showing and Hiding the Keyboard
+
+textFieldShouldReturn(_:)
+-> keyboard return on click
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder() // 인자로 넘어온 부분을 키보드가 내려가게 함
+        return true
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        //nameTextField.delegate = self 		// 이것을 반드시 해줘야 한다 !! 아니면 IB에 가서 delegate을 그 View 에 연결
+    }
+
+    // 바탕 화면이 눌렸을 때 키보드가 올라가게 함.
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    	// self는 view 자기 자신, view 객체의 함수
+        self.view.endEditing(true)
+    }
+
+UIResponder
+Responding to Touch Events
+
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesBegan")
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesMoved")
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesEnded")
+    }
+
+
+TextField 에서 키보드 설정해주는 것이 중요!!
+Keyboard, clearbutton(textFieldShouldClear), return key, placeholder
+
+
+
+
+
+in AppDelegate.swift
+
+	// 올해 새로 생긴 것. 아직 별로 쓸모가..
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        print("willFinishLaunchingWithOptions")
+        return true
+    }
+
+    // window 위에 view 들이 붙는 구조, DB 초기화하는 부분(Core data), 앱 처음 시작시 한번 만
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Override point for customization after application launch.
+        print("didFinishLaunchingWithOptions")
+        return true
+    }
+
+
+
+    // 활성화 되면 실행 되는 부분, Background -> Foreground 할 때 에도 실행된다.
+    // 전화가 우선순위가 가장 높다. 게임을 하다가 전화가 오고, 다시 게임으로 넘어갈 때
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("applicationDidBecomeActive")
+    }
+
+// 처음 실행시
+willFinishLaunchingWithOptions
+didFinishLaunchingWithOptions
+applicationDidBecomeActive
+
+// background 진입 // 여기 있어도 Resources 를 잡고 있는 상태임
+applicationWillResignActive // 메시지가 온다면 이 함수만 뜬다. 취소를 누르면 밑에꺼는 실행 안됨
+applicationDidEnterBackground // Resources 해제!!
+
+// Foreground 진입
+applicationWillEnterForeground // 게임 같은 경우 Resources를 release! loading..
+applicationDidBecomeActive
+
+// App 종료시
+applicationWillTerminate
+
+
+UIViewController
+
+in ViewController.swift
+
+    override func loadView() { // 하드 코딩으로 View 를 만들 때 사용 하는 함수임.
+    						   // Your custom implementation of this method should not call super.
+        super.loadView()
+        print("loadView")
+    }
+
+    override func viewDidLoad() { // Called after the controller's view is loaded into memory. 초기화!!
+        super.viewDidLoad()
+        print("viewDidLoad")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) { // 확인해서 수정해야 하는 작업을 여기서 !!
+        super.viewWillAppear(true)
+        print("viewWillAppear")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        print("viewDidAppear")
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        print("viewWillDisappear")
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        print("viewDidDisappear")
+    }
+
+willFinishLaunchingWithOptions
+didFinishLaunchingWithOptions
+loadView
+viewDidLoad
+viewWillAppear
+applicationDidBecomeActive
+viewDidAppear
+
+// View 부를 때
+loadView
+viewDidLoad
+viewWillAppear
+viewDidAppear
+
+// 다른 View로 넘어 갈 때
+viewWillDisappear
+viewDidDisappear
+
+Segue:
+Segue도 하나의 객체임. Identifier도 정할 수 있고, Transition을 통해서 넘어가는 화면 애니메이션 설정 가능
+
+Button 과 View 를 연결하면서 present modally!
+
+
+
+
+UISegmentedControl:
+A UISegmentedControl object is a horizontal control made of multiple segments, each segment functioning as a discrete button.
+selectedSegmentIndex
+titleForSegment(at:)
+
+
+tool bar 안에 Bar button item(System item으로 아이콘 설정 가능)
+-> 맨 처음에 왼쪽 정렬이니깐 Flexible space bar button item을 사이사이에 넣어서 해결(<-> Fixed Space bar button item)
+
+
+UIWebView:
+You can use the UIWebView class to embed web content in your app
+
+loadRequest(_:) // 비동기이므로, 다른 쓰레드가 돌게 되는 것임.
+Connects to a given URL by initiating an asynchronous client request.
+
+NSURL:
+An NSURL object represents a URL that can potentially contain the location of a resource on a remote server, the path of a local file on disk, or even an arbitrary piece of encoded data.
+
+
+
+    @IBOutlet weak var mainWebView: UIWebView!
+
+    let urlString = "https://www.facebook.com"
+    mainWebView.loadRequest(URLRequest(url: URL(string: urlString)!)) // unWrapping!!!
+
+
+unwrapping 에 문제가 생기는 부분이있으면, 그 해당 return 값을 쓰는 부분에 !를 붙인다.
+
+    @IBAction func bookMarkAction(_ sender: Any) {
+        let bookMarkUrl = bookMarkSegmentedControl.titleForSegment(at: bookMarkSegmentedControl.selectedSegmentIndex)
+        let urlString = "https://www.\(bookMarkUrl!).com"
+        mainWebView.loadRequest(URLRequest(url: URL(string: urlString)!))
+        urlTextField.text = urlString
+    }
+
+
+UIActivityIndicatorView:
+Use an activity indicator to show that a task is in progress. An activity indicator appears as a “gear” that is either spinning or stopped
+
+startAnimating()
+stopAnimating() // 비동기에 대한 처리 때문에 두 함수의 위치가 중요함
+
+UIWebViewDelegate
+webViewDidStartLoad(_:)
+webViewDidFinishLoad(_:)
+-> Hides when Stopped 
+
+WebView에 이미 Action이 있으므로, goBack, forward, stop, reload 연결만 해주면 됨
+
+회원 가입시에는 WebView가 거의 필요함. 공지사항 or Event // Webkit engine !!! 매우 중요
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
