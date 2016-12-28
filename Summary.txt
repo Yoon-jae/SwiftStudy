@@ -275,11 +275,43 @@ WebView에 이미 Action이 있으므로, goBack, forward, stop, reload 연결�
 
 
 
+Switch
+
+isHidden (in UIView) t/f !!
+
+sender
+print((sender as AnyObject).description!) // sender가 누군지 확인하는법
+
+returnDateLabel.isHidden = !(sender as! UISwitch).isOn
+
+IB 에서 View Controller를 반드시 누른 후에 !! 여러가지 액션에 관한 설정
 
 
+UIDatePicker:
+A UIDatePicker object is a control used for the inputting of date and time values
+Value changed로 함수 생성 -> 날짜가 바뀔 때 마다, label 값을 바꿔주도록 한다.
+
+같은 이벤트에 대해서는 Tag를 통해서 구분할 수 있다.
+    
+    var buttonTag:Int = 1
+
+    buttonTag = (sender as! UIButton).tag
 
 
+    @IBAction func selectedDateAction(_ sender: Any) {
 
+    	// Date -> String 변환 하는 법 !!
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "YY-MM-d hh:mma"
+        let dateString = formatter.string(from: (sender as! UIDatePicker).date)
+
+        if(buttonTag == 1) {
+            departureDateButton.setTitle(dateString, for: UIControlState())
+        } else {
+            returnDateButton.setTitle(dateString, for: UIControlState())
+        }
+    }
 
 
 
