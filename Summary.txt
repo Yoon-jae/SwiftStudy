@@ -315,6 +315,104 @@ Value changed로 함수 생성 -> 날짜가 바뀔 때 마다, label 값을 바�
 
 
 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ UI Picker View @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+UIPickerView:
+The UIPickerView class implements objects, called picker views, that use a spinning-wheel or slot-machine metaphor to show one or more sets of values. Users select values by rotating the wheels so that the desired row of values aligns with a selection indicator.
+
+ -> Action을 모두 Delegate로 처리한다. Action이 따로 존재하지않음
+Additionally, picker views require a data source !!
+
+The data source adopts the @@@@ UIPickerViewDataSource @@@@ protocol and implements the required methods to return the number of components (columns) and the number of rows in each component. Note that the actual contents of each row comes from the delegate, not the data source.
+
+the number of rows !! 몇개 만들 건지 준비만 해라
+
+numberOfComponents -> Required method : // 몇개 Column을 만들 꺼니? 개수를 반환
+Called by the picker view when it needs the number of components.
+
+pickerView -> Required method : // 배열을 미리 만들자
+Called by the picker view when it needs the number of rows for a specified component.
+func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+
+
+
+// 둘중 하나는 무조건 구현해라
+The methods in this group are marked @optional. 
+However, to use a picker view, you must implement either 
+the pickerView(_:titleForRow:forComponent:) or 
+the pickerView(_:viewForRow:forComponent:reusing:) method 
+to provide the content of component rows.
+
+
+pickerView(_:titleForRow:forComponent:)
+Called by the picker view when it needs the title to use for a given row in a given component.
+
+optional func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+Called by the picker view when it needs the title to use for a given row in a given component.
+// Picker view 안에 Text(Title)을 넣을 때 사용
+
+optional func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView
+// Picker view 안에 ImageView를 넣을 때 사용
+
+
+
+optional func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+Called by the picker view when the user selects a row in a component.
+    // Picker view 의 값이 바뀔 때마다 호출 되는 함수
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("didSelectRow row:\(row), component:\(component)")
+    }
+
+
+1. 가장 먼저 protocol 선언
+UIPickerViewDataSource, UIPickerViewDelegate
+
+2.Required method 선언해주자(pickerView, numberOfComponents)
+
+3. UIPickerView 의 delegate를 View에 연결
+
+
+// 함수 호출 순서
+
+가장 먼저 numberOfComponents 함수를 통해 몇개 만들건지 호출
+
+그 다음 func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int 함수를 통해서
+각 Column들의 조건을 확인해서 몇개인지 체크
+
+그 다음 func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? 함수를 통해서
+text 값들이 들어가게 됨
+
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if component == 0 {
+            if row == 0 {
+                carModel = tesla
+            } else if row == 1 {
+                carModel = lamborghini
+            } else {
+                carModel = porsche
+            }
+        }
+        
+        // 값은 바뀌었으나, 다시 Refresh를 해줘야 한다.
+        pickerView.reloadAllComponents()
+    }
+
+func selectedRow(inComponent component: Int) -> Int
+Returns the index of the selected row in a given component. // 현재 선택 된 Row 의 값들
+
+imgView.image = UIImage(named: carModelImage[pickerView.selectedRow(inComponent: 1)])
+
+// Image View 꾸미는 부분
+imgView.layer.cornerRadius = 50.0
+imgView.layer.masksToBounds = true
+
+
+
+
+
+
+
+
 
 
 
