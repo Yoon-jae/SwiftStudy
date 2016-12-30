@@ -408,9 +408,16 @@ imgView.layer.masksToBounds = true
 
 
 
+Tab bar
+is inital view controller?
 
+오른쪽으로 새로운 view 에 연결해서 Relationship segue!!
 
+tab bar인 경우에는 5개를 넘어가면 more를 통해서 navigation controller가 실행된다. -> 순서를 Edit 할 수 있게 됨
 
+해당 View의 파일을 만들 때 에는 Cocoa touch class로 생성해서, UIViewController 설정을 해줘라
+
+그리고 IB에서 @@@@ Indentity inspector @@@@ (3번째 tab)에서 class를 연결해줌!! 매우중요
 
 
 
