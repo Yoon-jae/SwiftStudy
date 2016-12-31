@@ -17,10 +17,11 @@
 		F6B75B741E173399005C1A47 /* rainy.png in Resources */ = {isa = PBXBuildFile; fileRef = F6B75B6F1E173399005C1A47 /* rainy.png */; };
 		F6B75B751E173399005C1A47 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = F6B75B701E173399005C1A47 /* snow.png */; };
 		F6B75B761E173399005C1A47 /* sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = F6B75B711E173399005C1A47 /* sunny.png */; };
+		F6B75BF21E17E40B005C1A47 /* WeatherCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B75BF11E17E40B005C1A47 /* WeatherCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F6B75B561E17335D005C1A47 /* WeatherTable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTable.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F6B75B561E17335D005C1A47 /* WeatherTableUsingXMLParser.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherTableUsingXMLParser.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6B75B591E17335D005C1A47 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6B75B5B1E17335D005C1A47 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F6B75B5E1E17335D005C1A47 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -32,6 +33,7 @@
 		F6B75B6F1E173399005C1A47 /* rainy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rainy.png; sourceTree = "<group>"; };
 		F6B75B701E173399005C1A47 /* snow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = snow.png; sourceTree = "<group>"; };
 		F6B75B711E173399005C1A47 /* sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sunny.png; sourceTree = "<group>"; };
+		F6B75BF11E17E40B005C1A47 /* WeatherCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,7 +50,7 @@
 		F6B75B4D1E17335D005C1A47 = {
 			isa = PBXGroup;
 			children = (
-				F6B75B581E17335D005C1A47 /* WeatherTable */,
+				F6B75B581E17335D005C1A47 /* WeatherTableUsingXMLParser */,
 				F6B75B571E17335D005C1A47 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,22 +58,24 @@
 		F6B75B571E17335D005C1A47 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F6B75B561E17335D005C1A47 /* WeatherTable.app */,
+				F6B75B561E17335D005C1A47 /* WeatherTableUsingXMLParser.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		F6B75B581E17335D005C1A47 /* WeatherTable */ = {
+		F6B75B581E17335D005C1A47 /* WeatherTableUsingXMLParser */ = {
 			isa = PBXGroup;
 			children = (
 				F6B75B6C1E173399005C1A47 /* Resources */,
 				F6B75B591E17335D005C1A47 /* AppDelegate.swift */,
 				F6B75B5B1E17335D005C1A47 /* ViewController.swift */,
 				F6B75B5D1E17335D005C1A47 /* Main.storyboard */,
+				F6B75BF11E17E40B005C1A47 /* WeatherCell.swift */,
 				F6B75B601E17335D005C1A47 /* Assets.xcassets */,
 				F6B75B621E17335D005C1A47 /* LaunchScreen.storyboard */,
 				F6B75B651E17335D005C1A47 /* Info.plist */,
 			);
+			name = WeatherTableUsingXMLParser;
 			path = WeatherTable;
 			sourceTree = "<group>";
 		};
@@ -90,9 +94,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		F6B75B551E17335D005C1A47 /* WeatherTable */ = {
+		F6B75B551E17335D005C1A47 /* WeatherTableUsingXMLParser */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = F6B75B681E17335D005C1A47 /* Build configuration list for PBXNativeTarget "WeatherTable" */;
+			buildConfigurationList = F6B75B681E17335D005C1A47 /* Build configuration list for PBXNativeTarget "WeatherTableUsingXMLParser" */;
 			buildPhases = (
 				F6B75B521E17335D005C1A47 /* Sources */,
 				F6B75B531E17335D005C1A47 /* Frameworks */,
@@ -102,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = WeatherTable;
+			name = WeatherTableUsingXMLParser;
 			productName = WeatherTable;
-			productReference = F6B75B561E17335D005C1A47 /* WeatherTable.app */;
+			productReference = F6B75B561E17335D005C1A47 /* WeatherTableUsingXMLParser.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -124,7 +128,7 @@
 					};
 				};
 			};
-			buildConfigurationList = F6B75B511E17335D005C1A47 /* Build configuration list for PBXProject "WeatherTable" */;
+			buildConfigurationList = F6B75B511E17335D005C1A47 /* Build configuration list for PBXProject "WeatherTableUsingXMLParser" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -137,7 +141,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				F6B75B551E17335D005C1A47 /* WeatherTable */,
+				F6B75B551E17335D005C1A47 /* WeatherTableUsingXMLParser */,
 			);
 		};
 /* End PBXProject section */
@@ -167,6 +171,7 @@
 			files = (
 				F6B75B5C1E17335D005C1A47 /* ViewController.swift in Sources */,
 				F6B75B5A1E17335D005C1A47 /* AppDelegate.swift in Sources */,
+				F6B75BF21E17E40B005C1A47 /* WeatherCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +317,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		F6B75B511E17335D005C1A47 /* Build configuration list for PBXProject "WeatherTable" */ = {
+		F6B75B511E17335D005C1A47 /* Build configuration list for PBXProject "WeatherTableUsingXMLParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F6B75B661E17335D005C1A47 /* Debug */,
@@ -321,13 +326,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		F6B75B681E17335D005C1A47 /* Build configuration list for PBXNativeTarget "WeatherTable" */ = {
+		F6B75B681E17335D005C1A47 /* Build configuration list for PBXNativeTarget "WeatherTableUsingXMLParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				F6B75B691E17335D005C1A47 /* Debug */,
 				F6B75B6A1E17335D005C1A47 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

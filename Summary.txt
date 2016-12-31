@@ -641,12 +641,82 @@ back 기능 같이 중복되는 기능을 위해서 그냥 하나의 파일을 �
 
 
 
+XML Parser:
+Event driven parser !!
+DOM parser 메모리에 모두 올린다(작은 파일) <-> SAX parser(Event driven parser, 큰 파일들)
+
+XMLParserDelegate protocol 추가
 
 
+<weatherinfo>
+  <local>
+    <country>한국</country>
+    <weather>비</weather>
+    <temperature>20</temperature>
+  </local>
+  <local>
+    <country>일본</country>
+    <weather>맑음</weather>
+    <temperature>19</temperature>
+  </local>
 
 
+// 파싱 방법 @@@@@@@@@@@
+
+    var datalist:[[String: String]] = []
+    var detaildata:[String: String] = [:]
+    var elementTemp:String = ""
+    var blank:Bool = false
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let baseURL = "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/weather.xml"
+        let parser = XMLParser(contentsOf: URL(string: baseURL)!)
+        
+        parser!.delegate = self
+        parser!.parse()
+    }
+
+    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        elementTemp = elementName
+        
+        blank = true
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        if blank && elementTemp != "local" && elementTemp != "weatherinfo" {
+            detaildata[elementTemp] = string
+        }
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "local" {
+            datalist += [detaildata]
+            print(detaildata)
+        }
+        blank = false
+    }
 
 
+XML에서 공백을 잡는 방법 @@@
+
+    var blank:Bool = false
+
+	func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
+        print("didStartElement : \(elementName)")
+        blank = true
+    }
+    
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
+        if blank {
+            print("foundCharacters : \(string)")
+        }
+    }
+    
+    func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        blank = false
+        print("didEndElement : \(elementName)")
+    }
 
 
 
