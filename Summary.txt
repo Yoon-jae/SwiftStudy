@@ -424,9 +424,67 @@ tab bar인 경우에는 5개를 넘어가면 more를 통해서 navigation contro
 
 
 
+UI Table view:
+An instance of UITableView (or simply, a table view) is a means for displaying and editing hierarchical lists of information.
+
+The data source must adopt the UITableViewDataSource protocol and the delegate must adopt the UITableViewDelegate protocol.
+
+numberOfSections // default section 1
+
+하나의 아이템들은 하나의 Cell로 구성
+
+func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+Required!
+Asks the data source for a cell to insert in a particular location of the table view.
+
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+Required!
+Tells the data source to return the number of rows in a given section of a table view.
 
 
 
+UITableViewDataSource protocol 추가
+
+	// 맨처음에 이 함수를 호출 해서 몇개의 Cell을 만들 건지 알려줌
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return datalist.count
+    } 
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        /* 하드코딩 방식, 셀이 없으니까 만들어줘야지.
+           화면에 보이는 만큼만 Cell을 만들고, Scroll을 내리면 queue에 하나를 빼고, 하나를 넣는다. 이 때에도 이 함수가 호출 됨.
+
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.subtitle, reuseIdentifier: "Cell")
+        }
+        */
+        
+        // print("indexPath row : \(indexPath.row)")
+        // 계속 cell마다 이 함수가 호출 되면서 생성된다
+        
+        var currentDic = datalist[indexPath.row]
+        cell.textLabel!.text = currentDic["지역"]
+        cell.detailTextLabel!.text = currentDic["날씨"]
+        
+        return cell
+    }
+
+
+var datalist:[[String: String]] = [] // List 안의 Dictionary !!! 매우 중요
+
+IndexPath // 구조체!!
+IndexPath represents the path to a specific node in a tree of nested array collections.
+row, section 속성을 사용한다
+
+delegate 연결해주고
+
+Cell 의 Style 선택, 지금은 Subtitle로 해서, detailTextLabel 사용
+
+@@@@@@@@@@@@@ 매우 중요 @@@@@@@@@@@@@@@@@
+identifier 설정!! 이것과 UITableViewCell return 하는 tableView 함수의 인자와 똑같이!!
+let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
 
 
