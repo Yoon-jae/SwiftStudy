@@ -613,6 +613,47 @@ The index paths representing the selected rows.
 
 
 
+Table view 말고 Drill down menu를 하려면 원래 Root view controller를 지우고, 새로운 View에 Root view controller로 연결 해준다
+
+// navigation controller 에서 show navigation bar 를 체크풀어주면 bar가 안보임
+
+Scroll view를 올리고, 그 계층 안에 이미지를 넣는다
+Scroll view 의 indentity inspectro에서 user defined runtime attributes 안에
+contentSize | Size | value값을 적절히 조절하면 스크롤 완성
+
+back 버튼 추가 방법 :
+새로운 파일을 하나 만들고
+class DetailViewController: UIViewController {
+
+    @IBAction func backButtonAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
+    ...
+}
+
+popToRootViewController -> 만약에 깊이 들어간 stack의 뷰에서 이걸 호출하면 바로 Root로 간다
+func popToViewController(_ viewController: UIViewController, animated: Bool) -> [UIViewController]? -> 일정한 view로 고고
+
+View를 복사 할 때에는 ctrl c한 다음 바탕화면을 누른 뒤 ctrl v !
+back 기능 같이 중복되는 기능을 위해서 그냥 하나의 파일을 공유해서 사용도 가능하다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
