@@ -474,6 +474,16 @@ UITableViewDataSource protocol 추가
 
 var datalist:[[String: String]] = [] // List 안의 Dictionary !!! 매우 중요
 
+var itemList = [[String: String]] () @@@ 걍 이걸로 쓰자!!!
+
+        let item1 = ["name":"사과","image":"apple.jpeg","amount":"6","value":"3000원"]
+        let item2 = ["name":"블루베리","image":"blueberry.jpg","amount":"10","value":"30000원"]
+        ......
+        let item12 = ["name":"야채","image":"vegetable.jpg","amount":"40","value":"7000원"]
+        let item13 = ["name":"멜론","image":"watermelon.png","amount":"5","value":"10000원"]
+        
+        itemList = [item1, item2,item3,item4,item5,item6,item7,item8,item9,item10,item11,item12,item13]
+
 IndexPath // 구조체!!
 IndexPath represents the path to a specific node in a tree of nested array collections.
 row, section 속성을 사용한다
@@ -485,6 +495,128 @@ Cell 의 Style 선택, 지금은 Subtitle로 해서, detailTextLabel 사용
 @@@@@@@@@@@@@ 매우 중요 @@@@@@@@@@@@@@@@@
 identifier 설정!! 이것과 UITableViewCell return 하는 tableView 함수의 인자와 똑같이!!
 let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+
+
+
+
+
+
+Navigation Controller
+
+IB에 Navigation Controller와 MasterViewController 생성 후 연결 해준다
+
+    var itemList = [[String: String]] ()
+
+    // MARK: - Table view data source
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        // #warning Incomplete implementation, return the number of sections
+        return 1 // default 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete implementation, return the number of rows
+        return itemList.count
+    }
+
+
+Cell cutomizing 
+Table view Cell -> Style을 Custom으로
+
+이거를 위해서 Cell을 위한 Class 가 필요하다.
+Cocoa touch class로 해서, UITableViewCell 상속 받을 것!!
+그리고 연결 해준다. 반드시 Custom Cell을 선택하고!!! identifier도 바꿔주기
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    	// CustomCell 로 캐스팅!!!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
+
+        // 배경 화면을 보여 주기 위해서 Cell의 Color는 Clear
+        cell.backgroundColor = UIColor.clear
+
+        let currentDic = itemList[indexPath.row]
+
+        cell.nameLabel!.text = currentDic["name"]!
+        cell.amountLabel!.text = currentDic["amount"]!
+        cell.valueLabel!.text = currentDic["value"]!
+
+        cell.imgView!.image = UIImage(named: currentDic["image"]!)
+        
+        
+        return cell
+    }
+
+Table View의 Background 이미지는 코딩으로 넣자!
+
+viewDidLoad
+        let backgroundImgView = UIImageView(image: UIImage(named: "background.jpg"))
+        backgroundImgView.contentMode = UIViewContentMode.scaleAspectFill
+        
+        // Frame 으로 사이즈 설정
+        backgroundImgView.frame = self.tableView.frame
+        
+        self.tableView.backgroundView = backgroundImgView
+
+
+CustomCell.swift
+
+	// 처음에 실행되는 함수
+	// Storyboard안에 하나하나 Nib file이 있다.
+
+class CustomCell: UITableViewCell {
+
+    @IBOutlet var nameLabel: UILabel!
+    @IBOutlet var amountLabel: UILabel!
+    @IBOutlet var valueLabel: UILabel!
+    @IBOutlet var imgView: UIImageView!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        imgView.contentMode = UIViewContentMode.scaleAspectFill
+
+        // 이미지 둥글게 처리하는 부분
+        imgView.layer.cornerRadius = 50.0 // 반지름을 50 으로
+        imgView.layer.masksToBounds = true
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+
+}
+
+
+
+
+Drill down menu 
+
+새로운 View Controller 를 만들어 준 다음, Cell을 선택해서 오른쪽 버튼으로 연결 해준다
+
+Selection Segue의 Show를 통해서 중간 누르면 넘어가게 !!
+// Accessory Action는 특별 한 경우. 가장자리를 누르거나 할 때
+
+Segue를 직접 선택하여 Identifier를 설정
+그리고 나서
+MasterView에서 prepare 함수를 통해 값들을 넘겨 준다 !!
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            (segue.destination as! DetailViewController).detailDataDic = itemList[self.tableView.indexPathForSelectedRow!.row]
+        }
+    }
+
+indexPathsForSelectedRows:
+The index paths representing the selected rows.
+
+
+
+
+
+
+
 
 
 
