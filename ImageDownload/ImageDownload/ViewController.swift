@@ -8,8 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController, URLSessionDownloadDelegate {
-
+//class ViewController: UIViewController, URLSessionDownloadDelegate {
+class ViewController: UIViewController {
+    
     @IBOutlet var imgVIew: UIImageView!
     @IBOutlet var indicator: UIActivityIndicatorView!
     @IBOutlet var progressView: UIProgressView!
@@ -21,24 +22,32 @@ class ViewController: UIViewController, URLSessionDownloadDelegate {
         self.progressView.setProgress(0.0, animated: false)
         self.imgVIew.image = nil
 
-        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
-        downloadTask = session.downloadTask(with: URL(string: "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/sample.jpeg")!)
+//        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: OperationQueue.main)
+        
+//        downloadTask = session.downloadTask(with: URL(string: "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/sample.jpeg")!)
+        downloadTask = session.downloadTask(with: URL(string: "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/sample.jpeg")!, completionHandler: { (data, response, error) -> Void in
+            let tempData:Data = try! Data(contentsOf: data!)
+            self.imgVIew.image = UIImage(data: tempData)
+            self.indicator.stopAnimating()
+        })
+        
         downloadTask.resume()
     }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-//        print("bytesWritten : \(bytesWritten)")
-//        print("totalBytesWritten : \(totalBytesWritten)")
-//        print("totalBytesExpectedToWrite : \(totalBytesExpectedToWrite)")
-        let progressValue:Float = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-        self.progressView.setProgress(progressValue, animated: true)
-    }
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        let tempData:Data = try! Data(contentsOf: location)
-        self.imgVIew.image = UIImage(data: tempData)
-        self.indicator.stopAnimating()
-    }
+//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+////        print("bytesWritten : \(bytesWritten)")
+////        print("totalBytesWritten : \(totalBytesWritten)")
+////        print("totalBytesExpectedToWrite : \(totalBytesExpectedToWrite)")
+//        let progressValue:Float = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+//        self.progressView.setProgress(progressValue, animated: true)
+//    }
+//    
+//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+//        let tempData:Data = try! Data(contentsOf: location)
+//        self.imgVIew.image = UIImage(data: tempData)
+//        self.indicator.stopAnimating()
+//    }
     
     @IBAction func suspendAction(_ sender: Any) {
         self.downloadTask.suspend()

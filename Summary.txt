@@ -915,7 +915,30 @@ totalBytesExpectedToWrite : 1467536
     }
 
 
-    
+
+
+Closure:
+self-contatined blocks of functionality(다른언어에서 lambda)
+
+func downloadTask(with url: URL, completionHandler: @escaping (URL?, URLResponse?, Error?) -> Void) -> URLSessionDownloadTask
+
+    @IBAction func downloadAction(_ sender: Any) {
+        self.indicator.startAnimating()
+        self.progressView.setProgress(0.0, animated: false)
+        self.imgVIew.image = nil
+
+        // delegate를 nil로 바꿔줄것
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: nil, delegateQueue: OperationQueue.main)
+
+// Delegate에서 다운로드 후 마지막에 호출 되는 함수의 기능을 여기서 실행 하면 된다.
+        downloadTask = session.downloadTask(with: URL(string: "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/sample.jpeg")!, completionHandler: { (data, response, error) -> Void in
+            let tempData:Data = try! Data(contentsOf: data!)
+            self.imgVIew.image = UIImage(data: tempData)
+            self.indicator.stopAnimating()
+        })
+        
+        downloadTask.resume()
+    }
 
 
 
