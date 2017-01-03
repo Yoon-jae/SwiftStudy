@@ -527,7 +527,7 @@ Cocoa touch class로 해서, UITableViewCell 상속 받을 것!!
 그리고 연결 해준다. 반드시 Custom Cell을 선택하고!!! identifier도 바꿔주기
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    	// CustomCell 로 캐스팅!!!
+    	// CustomCell 로 캐스팅!!! 맨 뒤에 as! CustomCell(Class name)
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomCell
 
         // 배경 화면을 보여 주기 위해서 Cell의 Color는 Clear
@@ -808,6 +808,128 @@ var datalist = NSDictionary()
         }
         return cell
     }
+
+
+
+
+Progress View
+
+
+
+URLSession // 내부 library :
+The NSURLSession class and related classes provide an API for downloading content. This API provides a rich set of delegate methods for supporting authentication and gives your app the ability to perform background downloads when your app is not running or, in iOS, while your app is suspended.
+
+Highly asynchrounus API 
+
+AFNetworking // 외부 library ! 편하다
+
+
+
+URLSessionDownloadDelegate protocol 선언
+
+
+
+Required !!
+func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL)
+: Tells the delegate that a download task has finished downloading.
+다운로드가 끝나고 나서 호출 되는 함수
+
+
+optional func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64)
+: Periodically informs the delegate about the download’s progress.
+다운로드 진행 중에 호출 되는 함수
+
+
+
+func downloadTask(with url: URL) -> URLSessionDownloadTask
+: Creates a download task that retrieves the contents of the specified URL and saves the results to a file.
+
+
+
+	// sessions.downloadTask를 반환 받기 위해서.
+    var downloadTask:URLSessionDownloadTask!
+
+    
+    @IBAction func downloadAction(_ sender: Any) {
+        self.indicator.startAnimating()
+        self.progressView.setProgress(0.0, animated: false)
+        self.imgVIew.image = nil
+
+        let session = URLSession(configuration: URLSessionConfiguration.default, delegate: self, delegateQueue: OperationQueue.main)
+        downloadTask = session.downloadTask(with: URL(string: "https://raw.githubusercontent.com/ChoiJinYoung/iphonewithswift2/master/sample.jpeg")!)
+
+        // 시작!!
+        downloadTask.resume()
+    }
+    
+    // 중간에 계속 호출 되는 함수
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+//        print("bytesWritten : \(bytesWritten)")
+//        print("totalBytesWritten : \(totalBytesWritten)")
+//        print("totalBytesExpectedToWrite : \(totalBytesExpectedToWrite)")
+        let progressValue:Float = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        self.progressView.setProgress(progressValue, animated: true)
+    }
+
+    /*
+
+bytesWritten : 81105 // 현재 들어오는 패킷의 양
+totalBytesWritten : 81105 // 쓰인 데이터의 양
+totalBytesExpectedToWrite : 1467536 // 총 데이터의 양
+bytesWritten : 65536
+totalBytesWritten : 146641
+totalBytesExpectedToWrite : 1467536
+......
+bytesWritten : 65536
+totalBytesWritten : 1457361
+totalBytesExpectedToWrite : 1467536
+bytesWritten : 10175
+totalBytesWritten : 1467536
+totalBytesExpectedToWrite : 1467536
+
+    */
+    
+    // 마지막에 호출되는 함수
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+
+    	// image를 Data로 받아서 설정한다.
+        let tempData:Data = try! Data(contentsOf: location)
+        self.imgVIew.image = UIImage(data: tempData)
+        self.indicator.stopAnimating()
+    }
+
+
+    @IBAction func suspendAction(_ sender: Any) {
+        self.downloadTask.suspend()
+    }
+    
+    @IBAction func resumeAction(_ sender: Any) {
+        self.downloadTask.resume()
+    }
+    
+    @IBAction func cancelAction(_ sender: Any) {
+        self.downloadTask.cancel()
+        self.progressView.setProgress(0.0, animated: false)
+        self.imgVIew.image = nil
+        self.indicator.stopAnimating()
+    }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
